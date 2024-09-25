@@ -1,0 +1,16 @@
+def benchmark(fn, print_prefix, use_profiler=True, *args, **kwargs):
+    """
+    Benchmarks the performance of a given function.
+
+    Parameters:
+    - fn (callable): The function to be benchmarked.
+    - print_prefix (str): Prefix for print statements and profiling log files.
+    - use_profiler (bool): Flag indicating whether to use PyTorch profiler.
+    - *args: Positional arguments to be passed to the function.
+    - **kwargs: Keyword arguments to be passed to the function.
+
+    This function measures the time it takes to execute `fn` for `TEST_TIME` iterations.
+    If `use_profiler` is True, it profiles the function using PyTorch's profiler and logs 
+    the results for tensorboard visualization. The benchmark outputs the number of tokens 
+    generated per second and the average time taken to generate a set number of tokens.
+    """
