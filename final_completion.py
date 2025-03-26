@@ -2,11 +2,10 @@ import json
 import re
 from chatgpt import call_openai_api  # 使用前面定义的 call_openai_api 函数
 from tqdm import tqdm  # 引入 tqdm 用于进度条
-
 if __name__ == "__main__":
     # 读取 dependencies.jsonl 并将内容存储在字典中
     dependencies_records = {}
-    with open("LLM_doublecheck/function_list.jsonl", 'r', encoding='utf-8') as f:
+    with open("function_list_buildup/function_list.jsonl", 'r', encoding='utf-8') as f:
         for line in f:
             record = json.loads(line)
             _id = record["_id"]
@@ -39,14 +38,17 @@ if __name__ == "__main__":
 
                 # 构建新的系统和用户提示
                 sys_prompt = (
-                    "You are a Python engineer. Your job is to complete the target function."
+                    "You are a Python engineer. Your job is to complete the target function. "
                 )
                 prompt = (
-                    "Complete the target function based on the given possible body. You can use the functions in the function list to help you when needed. Please only write the complete target function and don't include anything else.\n"
-                    f"Target Function: {target_function}\n"
-                    f"Possible body of the function: {possible_body}\n"
-                    f"Function List: {dependencies}\n"
-                    f"Please complete the target function."
+                    "Complete the target function. You can use the functions in the function list and current file to help you when needed. "
+                    "Please only write the complete target function and don't include anything else. "
+                    f"### Function List: {dependencies}\n"
+                    f"### Current File: {record['current_file']}\n"
+                    f"### Target Function: {target_function}\n"
+                    f"Please only write the complete target function and don't include anything else."
+                    "## Ensure that you provide the **full** function, including both the function signature and the function body.\n"
+                    "## Do **not** include anything else—only the complete function.\n\n"
                 )
 
                 # 初始化用于存储生成的代码的列表
@@ -67,8 +69,8 @@ if __name__ == "__main__":
                 # 将生成的代码加入结果列表
                 all_results.append(generated_codes)
 
-    # 将生成结果保存到 gpt_result.json 文件中
+    # 将生成结果保存到 ACR_result.json 文件中
     with open("ACR_result.json", 'w', encoding='utf-8') as out_file:
         json.dump(all_results, out_file, indent=4)
 
-    print("Summaries have been saved to gpt_result.json")
+    print("Summaries have been saved to ACR_result.json")

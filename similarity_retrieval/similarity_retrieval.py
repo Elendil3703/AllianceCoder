@@ -11,38 +11,54 @@ model = UniXcoder("microsoft/unixcoder-base")
 model.to(device)
 
 def get_embedding(text):
-    # 使用 UniXcoder 获取文本嵌入
+    # Use UniXcoder to get text embeddings
     tokens_ids = model.tokenize([text], max_length=512, mode="<encoder-only>")
     source_ids = torch.tensor(tokens_ids).to(device)
     tokens_embeddings, text_embedding = model(source_ids)
-    
-    # 返回嵌入并进行归一化，使用 detach() 分离计算图
-    return torch.nn.functional.normalize(text_embedding, p=2, dim=1).detach().cpu().numpy()
+    embedding = torch.nn.functional.normalize(text_embedding, p=2, dim=1)
+    return embedding.detach().cpu().numpy().flatten()  # Flatten to 1D array
 
 def cosine_similarity(vec1, vec2):
     # Cosine similarity between two normalized vectors
-    vec1 = np.array(vec1)
-    vec2 = np.array(vec2)
-    return np.dot(vec1, vec2.T)
+    return np.dot(vec1, vec2)
+
+def read_input_jsonl(file_path):
+    _id_to_function_name = {}
+    with open(file_path, 'r', encoding='utf-8') as jsonl_file:
+        for line in jsonl_file:
+            record = json.loads(line)
+            _id = record['metadata']['_id']
+            function_name = record['metadata']['function_name']
+            _id_to_function_name[_id] = function_name
+    return _id_to_function_name
 
 def similarity_retrieval():
-    # 正则表达式用于找到函数内容
-    regex_dash = r": (.*?)\." #匹配:和.之间的内容
-    predict_functionality = []  # 用于存储找到的函数内容
-    ids = []  # 用于存储对应的_id
-    
-    # 打开文件并逐行读取
+    # Regular expression to find function content
+    regex_dash = r"(?:\*\*)?`[^`]+`(?:\*\*)?:\s(.*?)(?=\n\d+\.|$)"  # Matches function description after function name
+
+    predict_functionality = []  # To store found function content
+    ids = []  # To store corresponding _id
+
+    # Read input/input.jsonl to get mapping from _id to function_name
+    _id_to_function_name = read_input_jsonl('input/input.jsonl')
+
+    # Open file and read line by line
     with open("ask_dependencies/dependencies.jsonl", 'r') as dependency:
         for line in dependency:
             record = json.loads(line)
             _id = record["_id"]
-            matches_dash = re.findall(regex_dash, record["all_dependencies"])  # 找到所有匹配项
+            matches_dash = re.findall(regex_dash, record["all_dependencies"], re.DOTALL)  # Find all matches
             if matches_dash:
-                for match in matches_dash:  # 遍历所有匹配项
+                for match in matches_dash:  # Iterate over all matches
                     predict_functionality.append(match.strip())
-                    ids.append(_id)  # 将_id添加到ids列表中
-    
-    # 加载函数摘要
+                    ids.append(_id)  # Add _id to ids list
+            else:
+                # If no match is found, append empty content for the _id
+                print(f"No match found for _id: {_id}")  # Print the _id for which no match is found
+                predict_functionality.append("")  # Empty content
+                ids.append(_id)
+
+    # Load function summaries
     function_summaries = []
     with open("repo_funcs_summary/function_summaries.json", 'r', encoding='utf-8') as jsonfile:
         data = json.load(jsonfile)
@@ -56,7 +72,7 @@ def similarity_retrieval():
 
     summaries = [entry['summary'] for entry in function_summaries]
 
-    # 加载函数详细信息
+    # Load function details
     function_details = []
     with open("repo_funcs_summary/function_details.json", 'r', encoding='utf-8') as jsonfile:
         data = json.load(jsonfile)
@@ -67,50 +83,96 @@ def similarity_retrieval():
                     "docstring": entry["docstring"] if entry["docstring"] is not None else "No docstring provided",
                     "args": entry["args"],
                     "defaults": entry["defaults"],
-                    "code": entry["code"]
+                    "code": entry["code"],
+                    "class": entry["class"],
+                    "file": entry["file"]
                 }
             )
 
-    # 预先计算所有摘要的嵌入
+    # Pre-compute embeddings for all summaries
     summary_embeddings = []
     for summary in tqdm(summaries, desc="Calculating summary embeddings"):
-        summary_embeddings.append(get_embedding(summary))  # 计算并存储每个摘要的嵌入
+        summary_embeddings.append(get_embedding(summary))
 
     output_data = []
 
-    # 遍历每一个 dependency
+    # Iterate over each dependency
     for idx, query in enumerate(tqdm(predict_functionality, desc="Processing queries", total=len(predict_functionality))):
-        query_embedding = get_embedding(query)  # 使用 UniXcoder 获取当前 query 的嵌入
+        _id = ids[idx]
+        query_embedding = get_embedding(query) if query else None  # Handle empty query case
 
-        # 计算当前 query 和所有函数摘要的相似度
-        similarities = [
-            cosine_similarity(query_embedding, summary_embedding)  # 用预先计算的摘要嵌入
-            for summary_embedding in summary_embeddings
-        ]
+        if query_embedding is not None:
+            # Compute similarities between query and all function summaries
+            similarities = [
+                cosine_similarity(query_embedding, summary_embedding)
+                for summary_embedding in summary_embeddings
+            ]
 
-        # 找到相似度最高的函数
-        max_index = np.argmax(similarities)
-        best_match = function_summaries[max_index]
+            # Convert similarities to a NumPy array
+            similarities = np.array(similarities)
 
-        # 用 function_name 找到详细信息
-        matching_function_detail = next(
-            (item for item in function_details if item["name"] == best_match['function_name']),
-            None
-        )
+            # Get indices sorted by decreasing similarity
+            sorted_indices = np.argsort(similarities)[::-1]
 
-        if matching_function_detail:
-            entry = {
-                "_id": ids[idx],
-                "Query": query,
-                "Function Name": matching_function_detail['name'],
-                "Docstring": matching_function_detail['docstring'],
-                "Arguments": ', '.join(matching_function_detail['args']),
-                "Defaults": matching_function_detail['defaults'],
-                "Code": matching_function_detail['code']
-            }
-            output_data.append(entry)
+            # Get the function name to skip for this _id
+            function_name_to_skip = _id_to_function_name.get(_id, None)
 
-    # 将结果写入 JSON 文件
+            best_match = None
+            matching_function_detail = None
+
+            # Iterate over sorted indices to find the best match that is not the same function
+            for idx_in_sorted in sorted_indices:
+                best_match_candidate = function_summaries[idx_in_sorted]
+                candidate_function_name = best_match_candidate['function_name']
+
+                if candidate_function_name != function_name_to_skip:
+                    # Found a function with a different name
+                    best_match = best_match_candidate
+
+                    # Find matching function detail
+                    matching_function_detail = next(
+                        (item for item in function_details if item["name"] == candidate_function_name),
+                        None
+                    )
+                    break  # Exit the loop as we have found our best match
+
+            if best_match and matching_function_detail:
+                entry = {
+                    "_id": _id,
+                    "Query": query,
+                    "Function Name": matching_function_detail['name'],
+                    "Docstring": matching_function_detail['docstring'],
+                    "Arguments": ', '.join(matching_function_detail['args']),
+                    "Defaults": matching_function_detail['defaults'],
+                    "Code": matching_function_detail['code'],
+                    "Class": matching_function_detail['class'],
+                    "File": matching_function_detail['file']
+                }
+                output_data.append(entry)
+            else:
+                # Could not find a suitable match
+                output_data.append({
+                    "_id": _id,
+                    "Query": query,
+                    "Function Name": "",
+                    "Docstring": "",
+                    "Arguments": "",
+                    "Defaults": [],
+                    "Code": ""
+                })
+        else:
+            # Handle case where the query is empty
+            output_data.append({
+                "_id": _id,
+                "Query": "",
+                "Function Name": "",
+                "Docstring": "",
+                "Arguments": "",
+                "Defaults": [],
+                "Code": ""
+            })
+
+    # Write the results to a JSON file
     with open("similarity_retrieval/retrieved_functions.json", 'w', encoding='utf-8') as f:
         json.dump(output_data, f, indent=4)
 

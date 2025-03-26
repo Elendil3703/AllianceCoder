@@ -1,49 +1,56 @@
-# Large Language Model based Adaptive Code Retrieval for Repository Code Generation
+# 🚀 AllianceCoder: What to Retrieve for Effective Retrieval-Augmented Code Generation?   🔍 An Empirical Study and Beyond  
 
-## Overview
+## 🌟 Overview  
 
-![Proposed_methodology.png](pics/Proposed_Methodology.png)
+🖥️ **AllianceCoder** consists of three key phases:  
 
-1. Provide the Large Model with a Brief Description and Definition of the Target Function:
-   1. Give the large language model (LLM) a concise summary comment and the definition of the target function.
-   2. Request the model to infer the potential content of the target function and identify other functions that it might call.
-2. Summarize Each Function in the Repository:
-   1. Ask the LLM to generate summaries for each function within the repository.
-   2. These summaries should succinctly describe the purpose and functionality of each function.
-3. Encode All Function Information into Vectors and Perform Similarity Retrieval:
-   1. Convert all the function summaries in the repository into vector representations.
-   2. Use the summary of the target function to perform a similarity search, identifying other functions that are likely to be called by the target function based on their semantic similarity.
-4. Verify the Potentially Called Functions with the Large Model:
-    1. Utilize the LLM to confirm whether the identified potential functions can indeed be called within the target function context.
-    2. This verification should ensure that the functions are compatible and correctly implemented for the intended usage.
-5. Complete the Target Function Based on Retrieved Related Functions:
-    1. Based on the functions identified through the similarity search and verified by the LLM, ask the model to complete the target function.
-    2. Ensure the completed function is coherent, logically correct, and leverages the relevant functions appropriately.
+![Proposed_methodology.png](pics/AllianceCoder.png)  
 
-## Project
+### 📌 1. Repository API Processing  
+
+✅ We utilize **large language models (LLMs)** to generate **natural language descriptions** for each API present in the repository.  
+✅ These descriptions are then **encoded into vector representations** using pre-trained embedding models.  
+
+### 📌 2. Query Processing  
+
+🔍 We guide LLMs with **carefully designed examples** to generate **descriptions of potentially invoked API functionalities**.  
+🔍 These descriptions are similarly **encoded into vector representations**.  
+
+### 📌 3. Context-Integrated Code Generation 
+
+🤖 **Relevant APIs are retrieved** based on the **cosine similarity** between their **vector representations**.  
+🤖 The retrieved APIs provide **valuable context** for **enhanced code generation**.  
+
+## 📂 Project Structure  
 
 ```md
-|-- ask_dependencies #This section is the first step of the above-mentioned procedure. It's output is ask_dependencies/dependencies.txt
-|-- exec_first_prompt.py #This python file is to excute the first part of ask_dependencies
-|-- exec_second_prompt.py #This python file is to excute the second part of ask_dependencies
-
-|-- repo_funcs_summary #This section is the second step of the above--mentioned procedure. It's output is repo_funcs_summary/function_summaries.json
-|-- exec_function_summaries.py #This python file is to excute the the repo_func_summary procedure
-
-|-- similarity_retrieval #This section is the third step of the above--mentioned procedure. It's output is similarity_retrieval/retrieved_functions.json
-
-|-- LLM_doublecheck #This section is the fourth step of the above--mentioned procedure. It's output is LLM_doublecheck/function_list.json
-
-|-- final_completion.py #This python file is the fifth step of the above--mentioned procedure. It's output is result.txt
-
-
-|-- input #This section contains the target function and the repository where the target function is located in.
+|-- 📁 repo_funcs_summary   # 🛠️ First step: Extract and summarize repository functions
+|
+|-- 📁 ask_dependencies     # 🔗 Second step: Identify function dependencies
+|
+|-- 📁 similarity_retrieval  # 🔍 Third step: Retrieve the most relevant APIs
+|-- 📁 function_list_buildup # 📜 Build a function list for further reference
+|-- 📄 final_completion.py   # 🏗️ Generate complete code using retrieved APIs
+|
+|-- 🚀 run_pipeline.py       # ▶️ Execute the full pipeline
 ```
 
-## QuickStart
+## ⚡ QuickStart
+
+### 📝 1. Prepare the Input Files
+
+📌 Ensure you have input.jsonl and the input repository structured correctly in the input folder.
+
+### 📦 2. Install Dependencies
+
+Run the following command to install all required packages:
 
 ```sh
 pip install contexttimer flask transformers_stream_generator colorama accelerate python-Levenshtein tqdm sentence_transformers flash_attn
+```
 
+### ▶️ 3. Run the Pipeline
+
+```sh
 python run_pipeline.py
 ```

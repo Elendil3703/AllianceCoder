@@ -1,8 +1,7 @@
-from callLLM.callLLM import generate
 import json
-from chatgpt import call_openai_api
 from collections import defaultdict
 from tqdm import tqdm
+
 # 读取 JSON 数据
 with open("similarity_retrieval/retrieved_functions.json", 'r', encoding='utf-8') as jsonfile:
     retrieved_functions = json.load(jsonfile)
@@ -24,23 +23,8 @@ for entry in tqdm(retrieved_functions, desc="Processing Entries"):
             details += f'"{key}": "{value}", '
     
     details = details.strip(', ')  # 移除最后一个逗号
-
-    # 构造系统和用户提示
-    sys_prompt = (f"You are a python engineer. Your job is to check whether the function information and "
-                 f"function query provided are matched.")
-    prompt = (f"Query:{query}\nDetails:{details}\n"
-              f"Given the function information and function query, do you think they are matched? "
-              f"Please only answer 'yes' or 'no'.")
-
-    # 获取 LLM 的回答
-    answer = call_openai_api(prompt, sys_prompt)
-
-    # 调试输出 LLM 返回的结果
-    print(f"LLM Answer for {_id}: {answer}")
-
-    # 将该 _id 的条目初始化为空列表
-    if "yes" in answer.lower():
-        id_to_functions[_id].append(details)
+    
+    id_to_functions[_id].append(details)
 
 # 确保每个 _id 至少有一个空的 function_list
 for _id in retrieved_functions:
@@ -48,7 +32,7 @@ for _id in retrieved_functions:
         id_to_functions[_id['_id']] = []  # 如果没有任何匹配项，初始化为空列表
 
 # 写入到 JSONL 文件中
-with open("LLM_doublecheck/function_list.jsonl", 'w', encoding='utf-8') as f:
+with open("function_list_buildup/function_list.jsonl", 'w', encoding='utf-8') as f:
     for _id, function_list in id_to_functions.items():
         # 创建一个包含 _id 和它所有函数列表的 JSON 对象
         json_obj = {
