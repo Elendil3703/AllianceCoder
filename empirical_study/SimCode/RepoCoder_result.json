@@ -1,0 +1,353 @@
+[
+    [
+        [
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n    return input_string[::-1]",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n    return input_string[::-1]",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n    return input_string[::-1]",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n    return input_string[::-1]",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n    return input_string[::-1]"
+        ]
+    ],
+    [
+        [
+            "if is_camel_case(input_string):\n        return re.sub('(.)([A-Z][a-z]+)', r'\\1' + separator + r'\\2', re.sub('([a-z0-9])([A-Z])', r'\\1' + separator + r'\\2', input_string)).lower()\n    return input_string",
+            "if is_camel_case(input_string):\n        return re.sub('(.)([A-Z][a-z]+)', r'\\1' + separator + r'\\2', re.sub('([a-z0-9])([A-Z])', r'\\1' + separator + r'\\2', input_string)).lower()\n    return input_string",
+            "if is_camel_case(input_string):\n        return re.sub('(.)([A-Z][a-z]+)', r'\\1' + separator + r'\\2', re.sub('([a-z0-9])([A-Z])', r'\\1' + separator + r'\\2', input_string)).lower()\n    return input_string",
+            "def camel_case_to_snake(input_string, separator='_'):\n    \"\"\"\n    Convert a camel case string into a snake case one.\n    (The original string is returned if is not a valid camel case string)\n\n    *Example:*\n\n    >>> camel_case_to_snake('ThisIsACamelStringTest') # returns 'this_is_a_camel_case_string_test'\n\n    :param input_string: String to convert.\n    :type input_string: str\n    :param separator: Sign to use as separator.\n    :type separator: str\n    :return: Converted string.\n    \"\"\"\n    if not is_camel_case(input_string):\n        return input_string\n    snake_case = re.sub('(.)([A-Z][a-z]+)', r'\\1' + separator + r'\\2', input_string)\n    return re.sub('([a-z0-9])([A-Z])', r'\\1' + separator + r'\\2', snake_case).lower()",
+            "def camel_case_to_snake(input_string, separator='_'):\n    \"\"\"\n    Convert a camel case string into a snake case one.\n    (The original string is returned if is not a valid camel case string)\n\n    *Example:*\n\n    >>> camel_case_to_snake('ThisIsACamelStringTest') # returns 'this_is_a_camel_case_string_test'\n\n    :param input_string: String to convert.\n    :type input_string: str\n    :param separator: Sign to use as separator.\n    :type separator: str\n    :return: Converted string.\n    \"\"\"\n    if not is_camel_case(input_string):\n        return input_string\n    snake_case = re.sub('(.)([A-Z][a-z]+)', r'\\1' + separator + r'\\2', input_string)\n    return re.sub('([a-z0-9])([A-Z])', r'\\1' + separator + r'\\2', snake_case).lower()"
+        ]
+    ],
+    [
+        [
+            "if not is_snake_case(input_string, separator):\n        return input_string\n\n    parts = input_string.split(separator)\n    camel_case = ''.join(part.capitalize() for part in parts)\n\n    if not upper_case_first:\n        camel_case = camel_case[0].lower() + camel_case[1:]\n\n    return camel_case",
+            "if not is_snake_case(input_string, separator):\n        return input_string\n\n    parts = input_string.split(separator)\n    camel_case = ''.join(part.capitalize() for part in parts)\n\n    if not upper_case_first:\n        camel_case = camel_case[0].lower() + camel_case[1:]\n\n    return camel_case",
+            "if not is_snake_case(input_string, separator):\n        return input_string\n\n    words = input_string.split(separator)\n    camel_case = ''.join(word.capitalize() for word in words)\n\n    if not upper_case_first:\n        camel_case = camel_case[0].lower() + camel_case[1:]\n\n    return camel_case",
+            "if not is_snake_case(input_string, separator):\n        return input_string\n\n    words = input_string.split(separator)\n    camel_case = ''.join(word.capitalize() for word in words)\n\n    if not upper_case_first:\n        camel_case = camel_case[0].lower() + camel_case[1:]\n\n    return camel_case",
+            "if not is_snake_case(input_string, separator):\n        return input_string\n\n    parts = input_string.split(separator)\n    camel_case = ''.join(part.capitalize() for part in parts)\n\n    if not upper_case_first:\n        camel_case = camel_case[0].lower() + camel_case[1:]\n\n    return camel_case"
+        ]
+    ],
+    [
+        [
+            "def strip_html(input_string: str, keep_tag_content: bool = False) -> str:\n    \"\"\"\n    Remove html code contained into the given string.\n\n    *Examples:*\n\n    >>> strip_html('test: <a href=\"foo/bar\">click here</a>') # 'test: '\n    >>> strip_html('test: <a href=\"foo/bar\">click here</a>', keep_tag_content=True) # returns 'test: click here'\n\n    :param input_string: String to manipulate.\n    :type input_string: str\n    :param keep_tag_content: True to preserve tag content, False to remove tag and its content too (default).\n    :type keep_tag_content: bool\n    :return: String with html removed.\n    \"\"\"\n    if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    if keep_tag_content:\n        return HTML_RE.sub(r'\\4', input_string)\n    else:\n        return HTML_RE.sub('', input_string)",
+            "def strip_html(input_string: str, keep_tag_content: bool = False) -> str:\n    \"\"\"\n    Remove html code contained into the given string.\n    *Examples:*\n\n    >>> strip_html('test: <a href=\"foo/bar\">click here</a>') # 'test: '\n    >>> strip_html('test: <a href=\"foo/bar\">click here</a>', keep_tag_content=True) # returns 'test: click here'\n\n    :param input_string: String to manipulate.\n    :type input_string: str\n    :param keep_tag_content: True to preserve tag content, False to remove tag and its content too (default).\n    :type keep_tag_content: bool\n    :return: String with html removed.\n    \"\"\"\n    if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    if keep_tag_content:\n        return HTML_RE.sub(r'\\4', input_string)\n    else:\n        return HTML_RE.sub('', input_string)",
+            "def strip_html(input_string: str, keep_tag_content: bool = False) -> str:\n    \"\"\"\n    Remove html code contained into the given string.\n\n    *Examples:*\n\n    >>> strip_html('test: <a href=\"foo/bar\">click here</a>') # 'test: '\n    >>> strip_html('test: <a href=\"foo/bar\">click here</a>', keep_tag_content=True) # returns 'test: click here'\n\n    :param input_string: String to manipulate.\n    :type input_string: str\n    :param keep_tag_content: True to preserve tag content, False to remove tag and its content too (default).\n    :type keep_tag_content: bool\n    :return: String with html removed.\n    \"\"\"\n    if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    if keep_tag_content:\n        return HTML_RE.sub(r'\\4', input_string)\n    else:\n        return HTML_RE.sub('', input_string)",
+            "def strip_html(input_string: str, keep_tag_content: bool = False) -> str:\n    \"\"\"\n    Remove html code contained into the given string.\n\n    *Examples:*\n\n    >>> strip_html('test: <a href=\"foo/bar\">click here</a>') # 'test: '\n    >>> strip_html('test: <a href=\"foo/bar\">click here</a>', keep_tag_content=True) # returns 'test: click here'\n\n    :param input_string: String to manipulate.\n    :type input_string: str\n    :param keep_tag_content: True to preserve tag content, False to remove tag and its content too (default).\n    :type keep_tag_content: bool\n    :return: String with html removed.\n    \"\"\"\n    if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    if keep_tag_content:\n        return HTML_RE.sub(r'\\4', input_string)\n    else:\n        return HTML_RE.sub('', input_string)",
+            "def strip_html(input_string: str, keep_tag_content: bool = False) -> str:\n    \"\"\"\n    Remove html code contained into the given string. *Examples:*\n\n    >>> strip_html('test: <a href=\"foo/bar\">click here</a>') # 'test: '\n    >>> strip_html('test: <a href=\"foo/bar\">click here</a>', keep_tag_content=True) # returns 'test: click here'\n\n    :param input_string: String to manipulate.\n    :type input_string: str\n    :param keep_tag_content: True to preserve tag content, False to remove tag and its content too (default).\n    :type keep_tag_content: bool\n    :return: String with html removed.\n    \"\"\"\n    if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    if keep_tag_content:\n        return HTML_RE.sub(r'\\4', input_string)\n    else:\n        return HTML_RE.sub('', input_string)"
+        ]
+    ],
+    [
+        [
+            "def prettify(input_string: str) -> str:\n    \"\"\"\n    Reformat a string by applying the following basic grammar and ing rules:\n\n    - String cannot start or end with spaces\n    - The first letter in the string and the ones after a dot, an exclamation or a question mark must be uppercase\n    - String cannot have multiple sequential spaces, empty lines or punctuation (except for \"?\", \"!\" and \".\")\n    - Arithmetic operators (+, -, /, \\\\*, =) must have one, and only one space before and after themselves\n    - One, and only one space should follow a dot, a comma, an exclamation or a question mark\n    - Text inside double quotes cannot start or end with spaces, but one, and only one space must come first and \\\n    after quotes (foo\" bar\"baz -> foo \"bar\" baz)\n    - Text inside round brackets cannot start or end with spaces, but one, and only one space must come first and \\\n    after brackets (\"foo(bar )baz\" -> \"foo (bar) baz\")\n    - Percentage sign (\"%\") cannot be preced by a space if there is a number before (\"100 %\" -> \"100%\")\n    - Saxon genitive is correct (\"Dave' s dog\" -> \"Dave's dog\")\n\n    *Examples:*\n\n    >>> prettify(' unprettified string ,, like this one,will be\"prettified\" .it\\\\' s awesome! ')\n    >>> # -> 'Unprettified string, like this one, will be \"prettified\". It\\'s awesome!'\n\n    :param input_string: String to manipulate\n    :return: Prettified string.\n    \"\"\"\n    formatter = StringFormatter(input_string)\n    return formatter.format()",
+            "def prettify(input_string: str) -> str:\n    \"\"\"\n    Reformat a string by applying the following basic grammar and ing rules:\n\n    - String cannot start or end with spaces\n    - The first letter in the string and the ones after a dot, an exclamation or a question mark must be uppercase\n    - String cannot have multiple sequential spaces, empty lines or punctuation (except for \"?\", \"!\" and \".\")\n    - Arithmetic operators (+, -, /, \\\\*, =) must have one, and only one space before and after themselves\n    - One, and only one space should follow a dot, a comma, an exclamation or a question mark\n    - Text inside double quotes cannot start or end with spaces, but one, and only one space must come first and \\\n    after quotes (foo\" bar\"baz -> foo \"bar\" baz)\n    - Text inside round brackets cannot start or end with spaces, but one, and only one space must come first and \\\n    after brackets (\"foo(bar )baz\" -> \"foo (bar) baz\")\n    - Percentage sign (\"%\") cannot be preced by a space if there is a number before (\"100 %\" -> \"100%\")\n    - Saxon genitive is correct (\"Dave' s dog\" -> \"Dave's dog\")\n\n    *Examples:*\n\n    >>> prettify(' unprettified string ,, like this one,will be\"prettified\" .it\\\\' s awesome! ')\n    >>> # -> 'Unprettified string, like this one, will be \"prettified\". It\\'s awesome!'\n\n    :param input_string: String to manipulate\n    :return: Prettified string.\n    \"\"\"\n    formatter = StringFormatter(input_string)\n    return formatter.format()",
+            "def prettify(input_string: str) -> str:\n    \"\"\"\n    Reformat a string by applying the following basic grammar and ing rules:\n\n    - String cannot start or end with spaces\n    - The first letter in the string and the ones after a dot, an exclamation or a question mark must be uppercase\n    - String cannot have multiple sequential spaces, empty lines or punctuation (except for \"?\", \"!\" and \".\")\n    - Arithmetic operators (+, -, /, \\\\*, =) must have one, and only one space before and after themselves\n    - One, and only one space should follow a dot, a comma, an exclamation or a question mark\n    - Text inside double quotes cannot start or end with spaces, but one, and only one space must come first and \\\n    after quotes (foo\" bar\"baz -> foo \"bar\" baz)\n    - Text inside round brackets cannot start or end with spaces, but one, and only one space must come first and \\\n    after brackets (\"foo(bar )baz\" -> \"foo (bar) baz\")\n    - Percentage sign (\"%\") cannot be preced by a space if there is a number before (\"100 %\" -> \"100%\")\n    - Saxon genitive is correct (\"Dave' s dog\" -> \"Dave's dog\")\n\n    *Examples:*\n\n    >>> prettify(' unprettified string ,, like this one,will be\"prettified\" .it\\\\' s awesome! ')\n    >>> # -> 'Unprettified string, like this one, will be \"prettified\". It\\'s awesome!'\n\n    :param input_string: String to manipulate\n    :return: Prettified string.\n    \"\"\"\n    formatter = StringFormatter(input_string)\n    return formatter.format()",
+            "def prettify(input_string: str) -> str:\n    \"\"\"\n    Reformat a string by applying the following basic grammar and ing rules:\n\n    - String cannot start or end with spaces\n    - The first letter in the string and the ones after a dot, an exclamation or a question mark must be uppercase\n    - String cannot have multiple sequential spaces, empty lines or punctuation (except for \"?\", \"!\" and \".\")\n    - Arithmetic operators (+, -, /, \\\\*, =) must have one, and only one space before and after themselves\n    - One, and only one space should follow a dot, a comma, an exclamation or a question mark\n    - Text inside double quotes cannot start or end with spaces, but one, and only one space must come first and \\\n    after quotes (foo\" bar\"baz -> foo \"bar\" baz)\n    - Text inside round brackets cannot start or end with spaces, but one, and only one space must come first and \\\n    after brackets (\"foo(bar )baz\" -> \"foo (bar) baz\")\n    - Percentage sign (\"%\") cannot be preced by a space if there is a number before (\"100 %\" -> \"100%\")\n    - Saxon genitive is correct (\"Dave' s dog\" -> \"Dave's dog\")\n\n    *Examples:*\n\n    >>> prettify(' unprettified string ,, like this one,will be\"prettified\" .it\\\\' s awesome! ')\n    >>> # -> 'Unprettified string, like this one, will be \"prettified\". It\\'s awesome!'\n\n    :param input_string: String to manipulate\n    :return: Prettified string.\n    \"\"\"\n    formatter = StringFormatter(input_string)\n    return formatter.format()",
+            "formatter = StringFormatter(input_string)\n    return formatter.format()"
+        ]
+    ],
+    [
+        [
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    return unicodedata.normalize('NFKD', input_string).encode('ascii', 'ignore').decode('ascii')",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    return unicodedata.normalize('NFKD', input_string).encode('ascii', 'ignore').decode('ascii')",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    return unicodedata.normalize('NFKD', input_string).encode('ascii', 'ignore').decode('ascii')",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    return unicodedata.normalize('NFKD', input_string).encode('ascii', 'ignore').decode('ascii')",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    return unicodedata.normalize('NFKD', input_string).encode('ascii', 'ignore').decode('ascii')"
+        ]
+    ],
+    [
+        [
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    input_string = asciify(input_string)\n    input_string = re.sub(NO_LETTERS_OR_NUMBERS_RE, separator, input_string).lower()\n    input_string = re.sub(r'[' + re.escape(separator) + r']+', separator, input_string)\n    input_string = input_string.strip(separator)\n    return input_string",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    input_string = asciify(input_string)\n    # remove all non-alphanumeric chars\n    input_string = re.sub(NO_LETTERS_OR_NUMBERS_RE, '', input_string)\n    # convert to lower case\n    input_string = input_string.lower()\n    # replace spaces with separator\n    input_string = input_string.replace(' ', separator)\n    return input_string",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    input_string = asciify(input_string)\n    input_string = re.sub(NO_LETTERS_OR_NUMBERS_RE, separator, input_string)\n    input_string = input_string.lower()\n    input_string = re.sub(r'[' + re.escape(separator) + r']+', separator, input_string)\n    input_string = input_string.strip(separator)\n\n    return input_string",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    input_string = asciify(input_string)\n    slug = re.sub(NO_LETTERS_OR_NUMBERS_RE, separator, input_string).lower()\n    slug = re.sub(r'[' + re.escape(separator) + r']+', separator, slug)\n    slug = slug.strip(separator)\n    return slug",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    input_string = asciify(input_string)\n    # remove all non-alphanumeric chars\n    input_string = re.sub(NO_LETTERS_OR_NUMBERS_RE, '', input_string)\n    # converts to lower case\n    input_string = input_string.lower()\n    # splits string into tokens\n    tokens = input_string.split()\n    # joins tokens using provided separator\n    slug = separator.join(tokens)\n    return slug"
+        ]
+    ],
+    [
+        [
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    input_string = input_string.lower()\n    return input_string in [\"true\", \"1\", \"yes\", \"y\"]",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    input_string = input_string.lower()\n    return input_string in ['true', '1', 'yes', 'y']",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    input_string = input_string.lower()\n    return input_string in [\"true\", \"1\", \"yes\", \"y\"]",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    input_string = input_string.lower()\n    return input_string in ['true', '1', 'yes', 'y']",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    input_string = input_string.lower()\n    return input_string in [\"true\", \"1\", \"yes\", \"y\"]"
+        ]
+    ],
+    [
+        [
+            "lines = input_string.splitlines()\n    margin = len(lines[0]) - len(lines[0].lstrip())\n    result = \"\"\n    for line in lines:\n        if len(line) > margin:\n            result += line[margin:] + \"\\n\"\n        else:\n            result += line + \"\\n\"\n    return result.strip()",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    lines = input_string.splitlines()\n    margin = len(lines[0]) - len(lines[0].lstrip())\n    \n    return '\\n'.join([line[margin:] for line in lines])",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    lines = input_string.splitlines()\n    margin = len(lines[0]) - len(lines[0].lstrip())\n    \n    stripped_lines = [line[margin:] for line in lines]\n    return '\\n'.join(stripped_lines)",
+            "lines = input_string.splitlines()\n    margin = len(lines[0]) - len(lines[0].lstrip())\n    result = \"\"\n    for line in lines:\n        if len(line) >= margin:\n            result += line[margin:] + \"\\n\"\n        else:\n            result += line + \"\\n\"\n    return result.rstrip()",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    lines = input_string.splitlines()\n    margin = len(lines[0]) - len(lines[0].lstrip())\n    \n    result = \"\"\n    for line in lines:\n        if len(line) >= margin:\n            result += line[margin:] + \"\\n\"\n        else:\n            result += line + \"\\n\"\n            \n    return result.strip()"
+        ]
+    ],
+    [
+        [
+            "def compress(input_string: str, encoding: str = 'utf-8', compression_level: int = 9) -> str:\n    \"\"\"\n    Compress a string using zlib and encode it using base64.\n\n    :param input_string: String to compress.\n    :type input_string: str\n    :param encoding: String encoding.\n    :type encoding: str\n    :param compression_level: zlib compression level (0-9).\n    :type compression_level: int\n    :return: Compressed and encoded string.\n    \"\"\"\n    if not is_string(input_string):\n        raise InvalidInputError(input_string)\n    if len(input_string) == 0:\n        raise ValueError('Input string cannot be empty')\n    if not is_string(encoding):\n        raise ValueError('Invalid encoding')\n    if not isinstance(compression_level, int) or compression_level < 0 or compression_level > 9:\n        raise ValueError('Invalid compression_level: it must be an \"int\" between 0 and 9')\n    original_bytes = input_string.encode(encoding)\n    compressed_bytes = zlib.compress(original_bytes, compression_level)\n    encoded_bytes = base64.urlsafe_b64encode(compressed_bytes)\n    output = encoded_bytes.decode(encoding)\n    return output",
+            "def compress(input_string: str, encoding: str = 'utf-8', compression_level: int = 9) -> str:\n    \"\"\"\n    Compress a string using zlib and encode it with base64.\n\n    :param input_string: String to compress.\n    :type input_string: str\n    :param encoding: String encoding.\n    :type encoding: str\n    :param compression_level: zlib compression level (0-9).\n    :type compression_level: int\n    :return: Compressed and encoded string.\n    \"\"\"\n    if not is_string(input_string):\n        raise InvalidInputError(input_string)\n    if len(input_string) == 0:\n        raise ValueError('Input string cannot be empty')\n    if not is_string(encoding):\n        raise ValueError('Invalid encoding')\n    if not isinstance(compression_level, int) or compression_level < 0 or compression_level > 9:\n        raise ValueError('Invalid compression_level: it must be an \"int\" between 0 and 9')\n    original_bytes = input_string.encode(encoding)\n    compressed_bytes = zlib.compress(original_bytes, compression_level)\n    encoded_bytes = base64.urlsafe_b64encode(compressed_bytes)\n    output = encoded_bytes.decode(encoding)\n    return output",
+            "def compress(input_string: str, encoding: str = 'utf-8', compression_level: int = 9) -> str:\n    \"\"\"\n    Compress a string using zlib and encode it using base64.\n\n    :param input_string: String to compress.\n    :type input_string: str\n    :param encoding: String encoding.\n    :type encoding: str\n    :param compression_level: zlib compression level (0-9).\n    :type compression_level: int\n    :return: Compressed and encoded string.\n    \"\"\"\n    if not is_string(input_string):\n        raise InvalidInputError(input_string)\n    if len(input_string) == 0:\n        raise ValueError('Input string cannot be empty')\n    if not is_string(encoding):\n        raise ValueError('Invalid encoding')\n    if not isinstance(compression_level, int) or compression_level < 0 or compression_level > 9:\n        raise ValueError('Invalid compression_level: it must be an \"int\" between 0 and 9')\n    original_bytes = input_string.encode(encoding)\n    compressed_bytes = zlib.compress(original_bytes, compression_level)\n    encoded_bytes = base64.urlsafe_b64encode(compressed_bytes)\n    output = encoded_bytes.decode(encoding)\n    return output",
+            "def compress(input_string: str, encoding: str = 'utf-8', compression_level: int = 9) -> str:\n    \"\"\"\n    Compress a string using zlib and encode it using base64.\n\n    :param input_string: String to compress.\n    :type input_string: str\n    :param encoding: String encoding.\n    :type encoding: str\n    :param compression_level: zlib compression level (0-9).\n    :type compression_level: int\n    :return: Compressed and encoded string.\n    \"\"\"\n    if not is_string(input_string):\n        raise InvalidInputError(input_string)\n    if len(input_string) == 0:\n        raise ValueError('Input string cannot be empty')\n    if not is_string(encoding):\n        raise ValueError('Invalid encoding')\n    if not isinstance(compression_level, int) or compression_level < 0 or compression_level > 9:\n        raise ValueError('Invalid compression_level: it must be an \"int\" between 0 and 9')\n    original_bytes = input_string.encode(encoding)\n    compressed_bytes = zlib.compress(original_bytes, compression_level)\n    encoded_bytes = base64.urlsafe_b64encode(compressed_bytes)\n    output = encoded_bytes.decode(encoding)\n    return output",
+            "def compress(input_string: str, encoding: str = 'utf-8', compression_level: int = 9) -> str:\n    \"\"\"\n    Compress a string using zlib and encode it using base64.\n\n    :param input_string: String to compress.\n    :type input_string: str\n    :param encoding: String encoding.\n    :type encoding: str\n    :param compression_level: zlib compression level (0-9).\n    :type compression_level: int\n    :return: Compressed and encoded string.\n    \"\"\"\n    if not is_string(input_string):\n        raise InvalidInputError(input_string)\n    if len(input_string) == 0:\n        raise ValueError('Input string cannot be empty')\n    if not is_string(encoding):\n        raise ValueError('Invalid encoding')\n    if not isinstance(compression_level, int) or compression_level < 0 or compression_level > 9:\n        raise ValueError('Invalid compression_level: it must be an \"int\" between 0 and 9')\n    original_bytes = input_string.encode(encoding)\n    compressed_bytes = zlib.compress(original_bytes, compression_level)\n    encoded_bytes = base64.urlsafe_b64encode(compressed_bytes)\n    output = encoded_bytes.decode(encoding)\n    return output"
+        ]
+    ],
+    [
+        [
+            "def roman_encode(input_number: Union[str, int]) -> str:\n    \"\"\"\n    Convert the given number/string into a roman number.\n\n    The passed input must represents a positive integer in the range 1-3999 (inclusive).\n\n    Why this limit? You may be wondering:\n\n    1. zero is forbidden since there is no related representation in roman numbers\n    2. the upper bound 3999 is due to the limitation in the ascii charset\\\n    (the higher quantity sign displayable in ascii is \"M\" which is equal to 1000, therefore based on\\\n    roman numbers rules we can use 3 times M to reach 3000 but we can't go any further in thousands without\\\n    special \"boxed chars\").\n\n    *Examples:*\n\n    >>> roman_encode(37) # returns 'XXXVIII'\n    >>> roman_encode('2020') # returns 'MMXX'\n\n    :param input_number: An integer or a string to be converted.\n    :type input_number: Union[str, int]\n    :return: Roman number string.\n    \"\"\"\n    return roman_.encode(input_number)",
+            "def roman_encode(input_number: Union[str, int]) -> str:\n    \"\"\"\n    Convert the given number/string into a roman number.\n\n    The passed input must represents a positive integer in the range 1-3999 (inclusive).\n\n    Why this limit? You may be wondering:\n\n    1. zero is forbidden since there is no related representation in roman numbers\n    2. the upper bound 3999 is due to the limitation in the ascii charset\\\n    (the higher quantity sign displayable in ascii is \"M\" which is equal to 1000, therefore based on\\\n    roman numbers rules we can use 3 times M to reach 3000 but we can't go any further in thousands without\\\n    special \"boxed chars\").\n\n    *Examples:*\n\n    >>> roman_encode(37) # returns 'XXXVIII'\n    >>> roman_encode('2020') # returns 'MMXX'\n\n    :param input_number: An integer or a string to be converted.\n    :type input_number: Union[str, int]\n    :return: Roman number string.\n    \"\"\"\n    return roman_.encode(input_number)",
+            "def roman_encode(input_number: Union[str, int]) -> str:\n    \"\"\"\n    Convert the given number/string into a roman number.\n\n    The passed input must represents a positive integer in the range 1-3999 (inclusive).\n\n    Why this limit? You may be wondering:\n\n    1. zero is forbidden since there is no related representation in roman numbers\n    2. the upper bound 3999 is due to the limitation in the ascii charset\\\n    (the higher quantity sign displayable in ascii is \"M\" which is equal to 1000, therefore based on\\\n    roman numbers rules we can use 3 times M to reach 3000 but we can't go any further in thousands without\\\n    special \"boxed chars\").\n\n    *Examples:*\n\n    >>> roman_encode(37) # returns 'XXXVIII'\n    >>> roman_encode('2020') # returns 'MMXX'\n\n    :param input_number: An integer or a string to be converted.\n    :type input_number: Union[str, int]\n    :return: Roman number string.\n    \"\"\"\n    return roman_.encode(input_number)",
+            "def roman_encode(input_number: Union[str, int]) -> str:\n    \"\"\"\n    Convert the given number/string into a roman number.\n\n    The passed input must represents a positive integer in the range 1-3999 (inclusive).\n\n    Why this limit? You may be wondering:\n\n    1. zero is forbidden since there is no related representation in roman numbers\n    2. the upper bound 3999 is due to the limitation in the ascii charset\\\n    (the higher quantity sign displayable in ascii is \"M\" which is equal to 1000, therefore based on\\\n    roman numbers rules we can use 3 times M to reach 3000 but we can't go any further in thousands without\\\n    special \"boxed chars\").\n\n    *Examples:*\n\n    >>> roman_encode(37) # returns 'XXXVIII'\n    >>> roman_encode('2020') # returns 'MMXX'\n\n    :param input_number: An integer or a string to be converted.\n    :type input_number: Union[str, int]\n    :return: Roman number string.\n    \"\"\"\n    return roman_.encode(input_number)",
+            "def roman_encode(input_number: Union[str, int]) -> str:\n    \"\"\"\n    Convert the given number/string into a roman number.\n\n    The passed input must represents a positive integer in the range 1-3999 (inclusive).\n\n    Why this limit? You may be wondering:\n\n    1. zero is forbidden since there is no related representation in roman numbers\n    2. the upper bound 3999 is due to the limitation in the ascii charset\\\n    (the higher quantity sign displayable in ascii is \"M\" which is equal to 1000, therefore based on\\\n    roman numbers rules we can use 3 times M to reach 3000 but we can't go any further in thousands without\\\n    special \"boxed chars\").\n\n    *Examples:*\n\n    >>> roman_encode(37) # returns 'XXXVIII'\n    >>> roman_encode('2020') # returns 'MMXX'\n\n    :param input_number: An integer or a string to be converted.\n    :type input_number: Union[str, int]\n    :return: Roman number string.\n    \"\"\"\n    return roman_.encode(input_number)"
+        ]
+    ],
+    [
+        [
+            "def roman_decode(input_string: str) -> int:\n    \"\"\"\n    Decode a roman number string into an integer if the provided string is valid.\n\n    *Example:*\n\n    >>> roman_decode('VII') # returns 7\n\n    :param input_string: (Assumed) Roman number\n    :type input_string: str\n    :return: Integer value\n    \"\"\"\n    return RomanNumerals.decode(input_string)",
+            "def roman_decode(input_string: str) -> int:\n    \"\"\"\n    Decode a roman number string into an integer if the provided string is valid.\n\n    *Example:*\n\n    >>> roman_decode('VII') # returns 7\n\n    :param input_string: (Assumed) Roman number\n    :type input_string: str\n    :return: Integer value\n    \"\"\"\n    return RomanNumerals.decode(input_string)",
+            "def roman_decode(input_string: str) -> int:\n    \"\"\"\n    Decode a roman number string into an integer if the provided string is valid.\n\n    *Example:*\n\n    >>> roman_decode('VII') # returns 7\n\n    :param input_string: (Assumed) Roman number\n    :type input_string: str\n    :return: Integer value\n    \"\"\"\n    return RomanNumerals.decode(input_string)",
+            "def roman_decode(input_string: str) -> int:\n    \"\"\"\n    Decode a roman number string into an integer if the provided string is valid.\n\n    *Example:*\n\n    >>> roman_decode('VII') # returns 7\n\n    :param input_string: (Assumed) Roman number\n    :type input_string: str\n    :return: Integer value\n    \"\"\"\n    return roman_.decode(input_string)",
+            "def roman_decode(input_string: str) -> int:\n    \"\"\"\n    Decode a roman number string into an integer if the provided string is valid.\n\n    *Example:*\n\n    >>> roman_decode('VII') # returns 7\n\n    :param input_string: (Assumed) Roman number\n    :type input_string: str\n    :return: Integer value\n    \"\"\"\n    return Roman.decode(input_string)"
+        ]
+    ],
+    [
+        [
+            "return isinstance(obj, str)",
+            "return isinstance(obj, str)",
+            "return isinstance(obj, str)",
+            "return isinstance(obj, str)",
+            "return isinstance(obj, str)"
+        ]
+    ],
+    [
+        [
+            "if not is_string(input_string):\n        return False\n    return any(c.strip() for c in input_string)",
+            "if not is_string(input_string):\n        return False\n    return bool(input_string.strip())",
+            "if not is_string(input_string):\n        return False\n    return any(c not in string.whitespace for c in input_string)",
+            "if not is_string(input_string):\n        return False\n    return any(c not in string.whitespace for c in input_string)",
+            "if not is_string(input_string):\n        return False\n    return any(c.strip() for c in input_string)"
+        ]
+    ],
+    [
+        [
+            "```python\n    if not is_string(input_string):\n        raise InvalidInputError(input_string)\n    match = NUMBER_RE.match(input_string)\n    return match is not None\n\ndef is_string(input_data: Any) -> bool:\n    \"\"\"\n    Checks if the given object is a string.\n\n    :param input_data: Object to check\n    :type input_data: Any\n    :return: True if the object is a string, False otherwise\n    \"\"\"\n    return isinstance(input_data, str)\n\ndef booleanize(input_string: str) -> bool:\n    \"\"\"\n    Converts a string to a boolean value.\n\n    The conversion is case-insensitive.\n    The function returns True if the string is one of: 'true', '1', 'yes', 'y'.",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    match = NUMBER_RE.match(input_string)\n    return match is not None",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    match = NUMBER_RE.match(input_string)\n    return match is not None",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    match = NUMBER_RE.match(input_string)\n    return match is not None",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    match = NUMBER_RE.match(input_string)\n    return match is not None"
+        ]
+    ],
+    [
+        [
+            "if not isinstance(input_string, str):\n        raise InvalidInputError(input_string)\n    return INTEGER_RE.match(input_string) is not None",
+            "if not isinstance(input_string, str):\n        raise InvalidInputError(input_string)\n    return INTEGER_RE.match(input_string) is not None",
+            "if not isinstance(input_string, str):\n        raise InvalidInputError(input_string)\n    return INTEGER_RE.match(input_string) is not None",
+            "if not isinstance(input_string, str):\n        raise InvalidInputError(input_string)\n    return INTEGER_RE.match(input_string) is not None",
+            "if not isinstance(input_string, str):\n        raise InvalidInputError(input_string)\n    return INTEGER_RE.match(input_string) is not None"
+        ]
+    ],
+    [
+        [
+            "if not isinstance(input_string, str):\n        raise InvalidInputError(input_string)\n    return DECIMAL_RE.match(input_string) is not None",
+            "if not isinstance(input_string, str):\n        raise InvalidInputError(input_string)\n    return DECIMAL_RE.match(input_string) is not None",
+            "if not isinstance(input_string, str):\n        raise InvalidInputError(input_string)\n    return DECIMAL_RE.match(input_string) is not None",
+            "if not isinstance(input_string, str):\n        raise InvalidInputError(input_string)\n    return DECIMAL_RE.match(input_string) is not None",
+            "if not isinstance(input_string, str):\n        raise InvalidInputError(input_string)\n    return DECIMAL_RE.match(input_string) is not None"
+        ]
+    ],
+    [
+        [
+            "if not is_string(input_string):\n        return False\n\n    if allowed_schemes:\n        regex = re.compile(r'^{}$'.format(URLS_WITH_SCHEMES_RAW_STRING.format(schemes='|'.join(allowed_schemes))), re.IGNORECASE)\n    else:\n        regex = URL_REGEX\n\n    match = regex.match(input_string)\n    return bool(match)",
+            "if not is_string(input_string):\n        return False\n\n    if allowed_schemes:\n        regex = re.compile(r'^(?:{})\\:\\/\\/.*$'.format('|'.join(allowed_schemes)), re.IGNORECASE)\n        return bool(regex.match(input_string))\n    else:\n        return bool(URLS_RE.match(input_string))",
+            "if not is_string(input_string):\n        return False\n\n    if allowed_schemes is not None:\n        url_regex = re.compile(r'^(?:{})://.+'.format('|'.join(allowed_schemes)), re.IGNORECASE)\n        return bool(url_regex.match(input_string))\n    else:\n        return bool(URLS_RE.match(input_string))",
+            "if not is_string(input_string):\n        return False\n\n    if allowed_schemes:\n        regex = re.compile(r'^{}$'.format(URLS_RAW_STRING.format('|'.join(allowed_schemes))), re.IGNORECASE)\n    else:\n        regex = URLS_RE\n\n    match = regex.match(input_string)\n    return bool(match)",
+            "if not is_string(input_string):\n        return False\n\n    if allowed_schemes:\n        regex = re.compile(r'^(?:{})\\://'.format('|'.join(allowed_schemes)), re.IGNORECASE)\n        if not regex.match(input_string):\n            return False\n\n    return URLS_RE.match(input_string) is not None"
+        ]
+    ],
+    [
+        [
+            "if not is_string(input_string):\n        return False\n\n    return bool(ML_RE.match(input_string))",
+            "if not is_string(input_string):\n        return False\n\n    return bool(ML_RE.match(input_string))",
+            "if not is_string(input_string):\n        return False\n\n    return bool(ML_RE.match(input_string))",
+            "if not is_string(input_string):\n        return False\n\n    return bool(ML_RE.match(input_string))",
+            "if not is_string(input_string):\n        return False\n\n    return bool(ML_RE.match(input_string))"
+        ]
+    ],
+    [
+        [
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    if card_type is not None:\n        card_type = card_type.upper()\n        if card_type not in CREDIT_CARDS:\n            raise InvalidInputError(f'Unknown card type: {card_type}')\n        return bool(CREDIT_CARDS[card_type].match(input_string))\n    else:\n        for card_re in CREDIT_CARDS.values():\n            if card_re.match(input_string):\n                return True\n        return False",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    if card_type is not None:\n        card_type = card_type.upper()\n        if card_type not in CREDIT_CARDS:\n            raise InvalidInputError(f'Card type \"{card_type}\" not supported.')\n        return bool(CREDIT_CARDS[card_type].match(input_string))\n    else:\n        for card_re in CREDIT_CARDS.values():\n            if card_re.match(input_string):\n                return True\n        return False",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    if card_type is not None:\n        card_type = card_type.upper()\n        if card_type not in CREDIT_CARDS:\n            raise InvalidInputError(f'Unknown card type: {card_type}')\n        return bool(CREDIT_CARDS[card_type].match(input_string))\n    else:\n        for card_re in CREDIT_CARDS.values():\n            if card_re.match(input_string):\n                return True\n        return False",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    input_string = input_string.replace(' ', '')\n\n    if card_type is None:\n        for card_re in CREDIT_CARDS.values():\n            if card_re.match(input_string):\n                return True\n        return False\n    elif card_type.upper() in CREDIT_CARDS:\n        return CREDIT_CARDS[card_type.upper()].match(input_string) is not None\n    else:\n        return False",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    input_string = input_string.replace(' ', '')\n\n    if card_type is None:\n        for card_regex in CREDIT_CARDS.values():\n            if card_regex.match(input_string):\n                return True\n        return False\n    elif card_type.upper() in CREDIT_CARDS:\n        return CREDIT_CARDS[card_type.upper()].match(input_string) is not None\n    else:\n        return False"
+        ]
+    ],
+    [
+        [
+            "if not is_string(input_string):\n        return False\n\n    return bool(CAMEL_CASE_TEST_RE.match(input_string))",
+            "if not is_string(input_string):\n        return False\n\n    return bool(CAMEL_CASE_TEST_RE.match(input_string))",
+            "if not is_string(input_string):\n        return False\n\n    return bool(CAMEL_CASE_TEST_RE.match(input_string))",
+            "if not is_string(input_string):\n        return False\n\n    return bool(CAMEL_CASE_TEST_RE.match(input_string))",
+            "if not is_string(input_string):\n        return False\n\n    return bool(CAMEL_CASE_TEST_RE.match(input_string))"
+        ]
+    ],
+    [
+        [
+            "if not is_string(input_string):\n        return False\n\n    if separator not in input_string:\n        return False\n\n    if input_string[0].isdigit():\n        return False\n\n    return SNAKE_CASE_TEST_RE.match(input_string) is not None or SNAKE_CASE_TEST_DASH_RE.match(input_string) is not None",
+            "if not is_string(input_string):\n        return False\n\n    if separator not in input_string:\n        return False\n\n    if input_string[0].isdigit():\n        return False\n\n    return bool(SNAKE_CASE_TEST_RE.match(input_string) or SNAKE_CASE_TEST_DASH_RE.match(input_string))",
+            "if not is_string(input_string):\n        return False\n\n    if separator not in input_string:\n        return False\n\n    if input_string[0].isdigit():\n        return False\n\n    return SNAKE_CASE_TEST_RE.match(input_string) is not None or SNAKE_CASE_TEST_DASH_RE.match(input_string) is not None",
+            "if not is_string(input_string):\n        return False\n\n    if separator not in input_string:\n        return False\n\n    if input_string[0].isdigit():\n        return False\n\n    return SNAKE_CASE_TEST_RE.match(input_string) is not None or SNAKE_CASE_TEST_DASH_RE.match(input_string) is not None",
+            "if not is_string(input_string):\n        return False\n\n    if separator not in input_string:\n        return False\n\n    if input_string[0].isdigit():\n        return False\n\n    return bool(SNAKE_CASE_TEST_RE.match(input_string) or SNAKE_CASE_TEST_DASH_RE.match(input_string))"
+        ]
+    ],
+    [
+        [
+            "try:\n        json.loads(input_string)\n    except json.JSONDecodeError:\n        return False\n    return True",
+            "try:\n        json.loads(input_string)\n    except json.JSONDecodeError:\n        return False\n    return True",
+            "try:\n        json.loads(input_string)\n    except json.JSONDecodeError:\n        return False\n    return True",
+            "try:\n        json.loads(input_string)\n    except json.JSONDecodeError:\n        return False\n    return True",
+            "try:\n        json.loads(input_string)\n    except json.JSONDecodeError:\n        return False\n    return True"
+        ]
+    ],
+    [
+        [
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    regex = UUID_HEX_OK_RE if allow_hex else UUID_RE\n    match = regex.match(input_string)\n    return bool(match)",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    regex = UUID_HEX_OK_RE if allow_hex else UUID_RE\n    return regex.match(input_string) is not None",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    r = UUID_HEX_OK_RE if allow_hex else UUID_RE\n    match = r.match(input_string)\n    return match is not None",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    regex = UUID_HEX_OK_RE if allow_hex else UUID_RE\n    match = regex.match(input_string)\n    return bool(match)",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    regex = UUID_HEX_OK_RE if allow_hex else UUID_RE\n    match = regex.match(input_string)\n    return match is not None"
+        ]
+    ],
+    [
+        [
+            "return is_string(input_string) and IP_V4_RE.match(input_string)",
+            "if not is_string(input_string):\n        return False\n\n    return IP_V4_REGEX.match(input_string) is not None",
+            "if not is_string(input_string):\n        return False\n\n    return IP_V4_RE.match(input_string) is not None",
+            "if not is_string(input_string):\n        return False\n\n    return IP_V4_PATTERN.match(input_string) is not None",
+            "if not is_string(input_string):\n        return False\n\n    return IP_V4_RE.match(input_string) is not None"
+        ]
+    ],
+    [
+        [
+            "return is_string(input_string) and IP_V6_RE.match(input_string) is not None",
+            "if not is_string(input_string):\n        return False\n    return bool(IP_V6_RE.match(input_string))",
+            "if not is_string(input_string):\n        return False\n    return bool(IP_V6_RE.match(input_string))",
+            "if not is_string(input_string):\n        return False\n    return bool(IP_V6_RE.match(input_string))",
+            "return is_string(input_string) and IP_V6_RE.match(input_string) is not None"
+        ]
+    ],
+    [
+        [
+            "return is_ip_v4(input_string) or is_ip_v6(input_string)",
+            "return is_ip_v4(input_string) or is_ip_v6(input_string)",
+            "return is_ip_v4(input_string) or is_ip_v6(input_string)",
+            "return is_ip_v4(input_string) or is_ip_v6(input_string)",
+            "return is_ip_v4(input_string) or is_ip_v6(input_string)"
+        ]
+    ],
+    [
+        [
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    s = input_string.lower() if ignore_case else input_string\n    s = s.replace(' ', '') if ignore_spaces else s\n\n    return s == s[::-1]",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    s = input_string.lower() if ignore_case else input_string\n    s = s.replace(' ', '') if ignore_spaces else s\n\n    return s == s[::-1]",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    s = input_string.lower() if ignore_case else input_string\n    s = s.replace(' ', '') if ignore_spaces else s\n\n    return s == s[::-1]",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    s = input_string.lower() if ignore_case else input_string\n    s = s.replace(' ', '') if ignore_spaces else s\n\n    return s == s[::-1]",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    s = input_string.lower() if ignore_case else input_string\n    s = s.replace(' ', '') if ignore_spaces else s\n    return s == s[::-1]"
+        ]
+    ],
+    [
+        [
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    input_string = input_string.lower()\n    alphabet = set(string.ascii_lowercase)\n    return alphabet.issubset(set(input_string))",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    input_string = input_string.lower()\n    alphabet = set(string.ascii_lowercase)\n    return alphabet.issubset(set(input_string))",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    input_string = input_string.lower()\n    alphabet = set(string.ascii_lowercase)\n    return alphabet.issubset(set(input_string))",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    input_string = input_string.lower()\n    alphabet = \"abcdefghijklmnopqrstuvwxyz\"\n    for char in alphabet:\n        if char not in input_string:\n            return False\n    return True",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    input_string = input_string.lower()\n    alphabet = set(string.ascii_lowercase)\n    return alphabet.issubset(set(input_string))"
+        ]
+    ],
+    [
+        [
+            "if not is_string(input_string):\n        return False\n\n    input_string = input_string.lower()\n    return len(input_string) == len(set(input_string))",
+            "def is_isogram(input_string: Any) -> bool:\n    \"\"\"\n    Checks if the string is an isogram (https://en.wikipedia.org/wiki/Isogram).\n\n    *Examples:*\n\n    >>> is_isogram('dermatoglyphics') # returns true\n    >>> is_isogram('hello') # returns false\n\n    :param input_string: String to check.\n    :type input_string: str\n    :return: True if isogram, false otherwise.\n    \"\"\"\n    if not is_string(input_string):\n        raise InvalidInputError(input_string)\n    \n    input_string = input_string.lower()\n    return len(input_string) == len(set(input_string))",
+            "if not is_string(input_string):\n        return False\n\n    return len(input_string) == len(set(input_string))",
+            "if not is_string(input_string):\n        return False\n\n    return len(input_string) == len(set(input_string))",
+            "def is_isogram(input_string: Any) -> bool:\n    \"\"\"\n    Checks if the string is an isogram (https://en.wikipedia.org/wiki/Isogram).\n\n    *Examples:*\n\n    >>> is_isogram('dermatoglyphics') # returns true\n    >>> is_isogram('hello') # returns false\n\n    :param input_string: String to check.\n    :type input_string: str\n    :return: True if isogram, false otherwise.\n    \"\"\"\n    if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    input_string = input_string.lower()\n    return len(input_string) == len(set(input_string))"
+        ]
+    ],
+    [
+        [
+            "if not is_string(input_string):\n        return False\n\n    if not input_string:\n        return False\n\n    return all(c.isalnum() or c == separator for c in input_string) and input_string.count(separator) == len(input_string.split(separator)) -1",
+            "if not is_string(input_string):\n        return False\n\n    if not input_string:\n        return False\n\n    return all(c.isalnum() or c == separator for c in input_string) and input_string[0].isalnum() and input_string[-1].isalnum()",
+            "if not is_string(input_string):\n        return False\n\n    return bool(re.fullmatch(r'[\\w' + separator + ']+', input_string))",
+            "if not is_string(input_string):\n        return False\n\n    return bool(re.fullmatch(rf'^[a-z0-9]+(?:{separator}[a-z0-9]+)*$', input_string))",
+            "if not is_string(input_string):\n        return False\n\n    if not input_string:\n        return False\n\n    return all(c.isalnum() or c == separator for c in input_string) and input_string.count(separator) == len(input_string.split(separator)) -1"
+        ]
+    ],
+    [
+        [
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    return bool(HTML_RE.search(input_string))",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    return bool(HTML_RE.search(input_string))",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    return bool(HTML_RE.search(input_string))",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    return bool(HTML_RE.search(input_string))",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    return bool(HTML_RE.search(input_string))"
+        ]
+    ],
+    [
+        [
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    matches = WORDS_COUNT_RE.findall(input_string)\n    return len(matches)",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    matches = WORDS_COUNT_RE.findall(input_string)\n    return len(matches)",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    matches = WORDS_COUNT_RE.findall(input_string)\n    return len(matches)",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    matches = WORDS_COUNT_RE.findall(input_string)\n    return len(matches)",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n\n    matches = WORDS_COUNT_RE.findall(input_string)\n    return len(matches)"
+        ]
+    ],
+    [
+        [
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n    input_string = input_string.replace('-', '') if normalize else input_string\n    if len(input_string) == 10:\n        product = 0\n        try:\n            for index, digit in enumerate(input_string):\n                product += int(digit) * (index + 1)\n            return product % 11 == 0\n        except ValueError:\n            pass\n    return False",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n    input_string = input_string.replace('-', '') if normalize else input_string\n    if len(input_string) == 10:\n        product = 0\n        try:\n            for index, digit in enumerate(input_string):\n                product += int(digit) * (index + 1)\n            return product % 11 == 0\n        except ValueError:\n            pass\n    return False",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n    input_string = input_string.replace('-', '') if normalize else input_string\n    if len(input_string) == 10:\n        product = 0\n        try:\n            for index, digit in enumerate(input_string):\n                product += int(digit) * (index + 1)\n            return product % 11 == 0\n        except ValueError:\n            pass\n    return False",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n    input_string = input_string.replace('-', '') if normalize else input_string\n    if len(input_string) == 10:\n        product = 0\n        try:\n            for index, digit in enumerate(input_string):\n                product += int(digit) * (index + 1)\n            return product % 11 == 0\n        except ValueError:\n            pass\n    return False",
+            "if not is_string(input_string):\n        raise InvalidInputError(input_string)\n    input_string = input_string.replace('-', '') if normalize else input_string\n    return __ISBNC(input_string).is_isbn_10()"
+        ]
+    ],
+    [
+        [
+            "isbnc = __ISBNC(input_string, normalize)\n    return isbnc.is_isbn_13()",
+            "isbnc = __ISBNC(input_string, normalize)\n    return isbnc.is_isbn_13()",
+            "isbnc = __ISBNC(input_string, normalize)\n    return isbnc.is_isbn_13()",
+            "isbnc = __ISBNC(input_string, normalize)\n    return isbnc.is_isbn_13()",
+            "isbn = __ISBNC(input_string, normalize)\n    return isbn.is_isbn_13()"
+        ]
+    ],
+    [
+        [
+            "checker = __ISBNChecker(input_string, normalize)\n    return checker.is_isbn_13() or checker.is_isbn_10()",
+            "checker = __ISBNChecker(input_string, normalize)\n    return checker.is_isbn_13() or checker.is_isbn_10()",
+            "checker = __ISBNChecker(input_string, normalize)\n    return checker.is_isbn_13() or checker.is_isbn_10()",
+            "checker = __ISBNChecker(input_string, normalize)\n    return checker.is_isbn_13() or checker.is_isbn_10()",
+            "checker = __ISBNChecker(input_string, normalize)\n    return checker.is_isbn_13() or checker.is_isbn_10()"
+        ]
+    ],
+    [
+        [
+            "uid = uuid4()\n    return str(uid.hex) if as_hex else str(uid)",
+            "uid = uuid4()\n    return str(uid.hex) if as_hex else str(uid)",
+            "uid = uuid4()\n    return str(uid.hex) if as_hex else str(uid)",
+            "uid = uuid4()\n    return str(uid.hex) if as_hex else str(uid)",
+            "uid = uuid4()\n    return str(uid.hex) if as_hex else str(uid)"
+        ]
+    ],
+    [
+        [
+            "random_bytes = os.urandom(byte_count)\n    return binascii.hexlify(random_bytes).decode()",
+            "random_bytes = os.urandom(byte_count)\n    return binascii.hexlify(random_bytes).decode()",
+            "random_bytes = os.urandom(byte_count)\n    return binascii.hexlify(random_bytes).decode()",
+            "random_bytes = os.urandom(byte_count)\n    return binascii.hexlify(random_bytes).decode()",
+            "return binascii.hexlify(os.urandom(byte_count)).decode()"
+        ]
+    ],
+    [
+        [
+            "for i in range(start, stop, step):\n        yield __RomanNumbers.encode(i)\n\nclass __RomanNumbers:\n    __mappings = (\n        ('M', 1000, 1000, 'M', 'M', 'M'),\n        ('CM', 900, 100, 'C', 'D', 'M'),\n        ('D', 500, 100, 'C', 'D', 'M'),\n        ('CD', 400, 100, 'C', 'D', 'M'),\n        ('C', 100, 10, 'X', 'L', 'C'),\n        ('XC', 90, 10, 'X', 'L', 'C'),\n        ('L', 50, 10, 'X', 'L', 'C'),\n        ('XL', 40, 10, 'X', 'L', 'C'),\n        ('X', 10, 1, 'I', 'V', 'X'),\n        ('IX', 9, 1, 'I', 'V', 'X'),\n        ('V', 5, 1, 'I', 'V', 'X'),\n        ('IV', 4, 1, 'I', 'V', 'X'),\n        ('I', 1, 1, 'I', 'V', 'X'),\n    )\n\n    @classmethod\n    def __encode_digit(cls, index: int, value: int) -> str:\n        for i, mapping in enumerate(cls.__mappings):\n            if value == mapping[1]:\n                return mapping[0]",
+            "for i in range(start, stop, step):\n        yield __RomanNumbers.encode(i)\n\nclass __RomanNumbers:\n    __mappings = (\n        ('M', 1000, 'M', '', '', 'M'),\n        ('CM', 900, 'C', 'M', 'CM', 'CM'),\n        ('D', 500, 'D', '', '', 'D'),\n        ('CD', 400, 'C', 'D', 'CD', 'CD'),\n        ('C', 100, 'C', '', '', 'C'),\n        ('XC', 90, 'X', 'C', 'XC', 'XC'),\n        ('L', 50, 'L', '', '', 'L'),\n        ('XL', 40, 'X', 'L', 'XL', 'XL'),\n        ('X', 10, 'X', '', '', 'X'),\n        ('IX', 9, 'I', 'X', 'IX', 'IX'),\n        ('V', 5, 'V', '', '', 'V'),\n        ('IV', 4, 'I', 'V', 'IV', 'IV'),\n        ('I', 1, 'I', '', '', 'I'),\n    )\n\n    @classmethod\n    def __encode_digit(cls, index: int, value: int) -> str:\n        if value == 0:\n            return ''\n\n        for i, (sign, num_value, prefix, suffix, prefix_suffix, _) in enumerate(cls.__mappings):\n            if num_value == value:\n                return sign\n\n        raise ValueError('Unexpected value found: {}'.format(value))\n\n    @classmethod\n    def encode(cls, input_number: Union[str, int]) -> str:\n        # force input conversion to a string (we need it in order to iterate on each digit)\n        input_string = str(input_number)\n\n        if not is_integer(input_string):\n            raise ValueError('Invalid input, only strings or integers are allowed')\n\n        value = int(input_string)\n\n        if value < 1 or value > 3999:\n            raise ValueError('Input must be >= 1 and <= 3999')\n\n        input_len = len(input_string)\n        output = ''\n\n        # decode digits from right to left (start from units to thousands)\n        for index in range(input_len):\n            # get actual digit value as int\n            digit = int(input_string[input_len - index - 1])\n\n            # encode digit to roman string\n            encoded_digit = cls.__encode_digit(index, digit)\n            output = encoded_digit + output\n\n        return output",
+            "```python\n    for i in range(start, stop, step):\n        yield __RomanNumbers.encode(i)\n\nclass __RomanNumbers:\n    __mappings = (\n        ('M', 1000, 3, 'M', 'MM', 'MMM'),\n        ('C', 100, 3, 'C', 'CC', 'CCC'),\n        ('X', 10, 3, 'X', 'XX', 'XXX'),\n        ('I', 1, 3, 'I', 'II', 'III'),\n    )\n\n    @classmethod\n    def __encode_digit(cls, index: int, value: int) -> str:\n        if value == 0:\n            return ''\n\n        if value <= 3:\n            return cls.__mappings[index][3 + value -1]\n\n        if value == 4:\n            return cls.__mappings[index][3] + cls.__mappings[index][1]",
+            "```python\n    for i in range(start, stop, step):\n        yield __RomanNumbers.encode(i)\n\nclass __RomanNumbers:\n    __mappings = (\n        ('M', 1000, 3, 'M', 'MM', 'MMM'),\n        ('C', 100, 3, 'C', 'CC', 'CCC'),\n        ('X', 10, 3, 'X', 'XX', 'XXX'),\n        ('I', 1, 3, 'I', 'II', 'III'),\n    )\n\n    @classmethod\n    def __encode_digit(cls, index: int, value: int) -> str:\n        if value == 0:\n            return ''\n\n        if value <= 3:\n            return cls.__mappings[index][3] * value\n\n        if value == 4:\n            return cls.__mappings[index][3] + cls.__mappings[index][4]\n\n        if value == 5:\n            return cls.__mappings[index][4]",
+            "for i in range(start, stop, step):\n        yield __RomanNumbers.encode(i)\n\nclass __RomanNumbers:\n    __mappings = (\n        ('M', 1000, 0, 0, 'M', 0),\n        ('CM', 900, 1, 1, 'CM', 0),\n        ('D', 500, 2, 2, 'D', 0),\n        ('CD', 400, 3, 3, 'CD', 0),\n        ('C', 100, 4, 4, 'C', 0),\n        ('XC', 90, 5, 5, 'XC', 0),\n        ('L', 50, 6, 6, 'L', 0),\n        ('XL', 40, 7, 7, 'XL', 0),\n        ('X', 10, 8, 8, 'X', 0),\n        ('IX', 9, 9, 9, 'IX', 0),\n        ('V', 5, 10, 10, 'V', 0),\n        ('IV', 4, 11, 11, 'IV', 0),\n        ('I', 1, 12, 12, 'I', 0),\n    )\n\n    @classmethod\n    def __encode_digit(cls, index: int, value: int) -> str:\n        if value == 0:\n            return ''\n\n        for i, sign_tuple in enumerate(cls.__mappings):\n            if sign_tuple[1] == value * (10 ** index):\n                return sign_tuple[0] * value\n\n        raise ValueError('Unsupported value')\n\n    @classmethod\n    def encode(cls, input_number: Union[str, int]) -> str:\n        # force input conversion to a string (we need it in order to iterate on each digit)\n        input_string = str(input_number)\n\n        if not is_integer(input_string):\n            raise ValueError('Invalid input, only strings or integers are allowed')\n\n        value = int(input_string)\n\n        if value < 1 or value > 3999:\n            raise ValueError('Input must be >= 1 and <= 3999')\n\n        input_len = len(input_string)\n        output = ''\n\n        # decode digits from right to left (start from units to thousands)\n        for index in range(input_len):\n            # get actual digit value as int\n            digit = int(input_string[input_len - index - 1])\n\n            # encode digit to roman string\n            encoded_digit = cls.__encode_digit(index, digit)\n            output = encoded_digit + output\n\n        return output"
+        ]
+    ]
+]

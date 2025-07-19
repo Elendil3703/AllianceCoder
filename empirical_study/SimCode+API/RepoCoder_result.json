@@ -1,0 +1,146 @@
+[
+    [
+        [
+            "def _m(*names: str) -> str:\n    \"\"\"Get module names\"\"\"\n    return '.'.join(names)",
+            "def _m(*names: str) -> str:\n    \"\"\"Get module names\"\"\"\n    return '.'.join(names)",
+            "def _m(*names: str) -> str:\n    \"\"\"Get module names\"\"\"\n    return '.'.join(names)",
+            "def _m(*names: str) -> str:\n    \"\"\"Get module names\"\"\"\n    return '.'.join(names)",
+            "def _m(*names: str) -> str:\n    \"\"\"Get module names\"\"\"\n    return '.'.join(names)"
+        ]
+    ],
+    [
+        [
+            "def _attr(obj: object, attr: str) -> object:\n    \"\"\"Nest `getattr` function.\"\"\"\n    for part in attr.split('.'):\n        obj = getattr(obj, part)\n    return obj",
+            "def _attr(obj: object, attr: str) -> object:\n    \"\"\"Nest `getattr` function.\"\"\"\n    for part in attr.split('.'):\n        obj = getattr(obj, part)\n    return obj",
+            "def _attr(obj: object, attr: str) -> object:\n    \"\"\"Nest `getattr` function.\"\"\"\n    for part in attr.split('.'):\n        obj = getattr(obj, part)\n    return obj",
+            "def _attr(obj: object, attr: str) -> object:\n    \"\"\"Nest `getattr` function.\"\"\"\n    for part in attr.split('.'):\n        obj = getattr(obj, part)\n    return obj",
+            "def _attr(obj: object, attr: str) -> object:\n    \"\"\"Nest `getattr` function.\"\"\"\n    for a in attr.split('.'):\n        obj = getattr(obj, a)\n    return obj"
+        ]
+    ],
+    [
+        [
+            "def _defaults(args: Sequence[Optional[expr]]) -> Iterator[str]:\n    \"\"\"Literals of the table.\"\"\"\n    for arg in args:\n        if isinstance(arg, Constant):\n            yield code(str(arg.value))\n        elif isinstance(arg, Name):\n            yield code(arg.id)\n        elif isinstance(arg, Subscript):\n            yield code(str(arg.slice))\n        elif isinstance(arg, BinOp):\n            yield code(f\"{unparse(arg.left)} {arg.op} {unparse(arg.right)}\")\n        elif isinstance(arg, (FunctionDef, AsyncFunctionDef)):\n            yield code(arg.name)\n        # Add additional conditions for other AST node types as needed",
+            "def _defaults(args: Sequence[Optional[expr]]) -> Iterator[str]:\n    \"\"\"Literals of the table.\"\"\"\n    for arg in args:\n        if arg is None:\n            yield \"None\"\n        elif isinstance(arg, Constant):\n            yield str(arg.value)\n        elif isinstance(arg, Name):\n            yield arg.id\n        elif isinstance(arg, Subscript):\n            yield f\"{code(unparse(arg))}\"\n        elif isinstance(arg, BinOp):\n            yield f\"{code(unparse(arg))}\"\n        else:\n            yield code(unparse(arg))",
+            "def _defaults(args: Sequence[Optional[expr]]) -> Iterator[str]:\n    \"\"\"Literals of the table.\"\"\"\n    for arg in args:\n        if arg is None:\n            yield \"None\"\n        elif isinstance(arg, Constant):\n            yield str(arg.value)\n        elif isinstance(arg, Name):\n            yield arg.id\n        elif isinstance(arg, Subscript):\n            yield f\"{code(unparse(arg))}\"\n        else:\n            yield code(unparse(arg))",
+            "def _defaults(args: Sequence[Optional[expr]]) -> Iterator[str]:\n    \"\"\"Literals of the table.\"\"\"\n    for arg in args:\n        if arg is None:\n            yield \"None\"\n        elif isinstance(arg, Constant):\n            yield str(arg.value)\n        else:\n            yield code(unparse(arg))",
+            "def _defaults(args: Sequence[Optional[expr]]) -> Iterator[str]:\n    \"\"\"Literals of the table.\"\"\"\n    for arg in args:\n        if isinstance(arg, Constant):\n            yield str(arg.value)\n        elif isinstance(arg, Name):\n            yield arg.id\n        elif isinstance(arg, Subscript):\n            yield f\"{code(unparse(arg).strip())}\"\n        else:\n            yield code(unparse(arg).strip())"
+        ]
+    ],
+    [
+        [
+            "def parent(name: str, *, level: int = 1) -> str:\n    \"\"\"Get parent name with level.\"\"\"\n    parts = name.rsplit('.', level)\n    if len(parts) > level:\n        return '.'.join(parts[:-level])\n    return ''",
+            "def parent(name: str, *, level: int = 1) -> str:\n    \"\"\"Get parent name with level.\"\"\"\n    parts = name.rsplit('.', level)\n    return '.'.join(parts[:-1]) if len(parts) > 1 else ''",
+            "def parent(name: str, *, level: int = 1) -> str:\n    \"\"\"Get parent name with level.\"\"\"\n    parts = name.rsplit('.', level)\n    return '.'.join(parts[:-1]) if len(parts) > 1 else ''",
+            "def parent(name: str, *, level: int = 1) -> str:\n    \"\"\"Get parent name with level.\"\"\"\n    parts = name.rsplit('.', level)\n    return '.'.join(parts[:-level]) if level < len(parts) else ''",
+            "def parent(name: str, *, level: int = 1) -> str:\n    \"\"\"Get parent name with level.\"\"\"\n    parts = name.rsplit('.', level)\n    return '.'.join(parts[:-1]) if level else name"
+        ]
+    ],
+    [
+        [
+            "def is_magic(name: str) -> bool:\n    \"\"\"Check magic name.\"\"\"\n    return name.startswith('__') and name.endswith('__')",
+            "def is_magic(name: str) -> bool:\n    \"\"\"Check magic name.\"\"\"\n    return name.rsplit('__', 1)[-1] == '' and name.startswith('__')",
+            "def is_magic(name: str) -> bool:\n    \"\"\"Check magic name.\"\"\"\n    return name.rsplit('__', 1)[0] == '' and name.startswith('__') and name.endswith('__')",
+            "def is_magic(name: str) -> bool:\n    \"\"\"Check magic name.\"\"\"\n    return name.rsplit('__', 1)[-1] == name and name.startswith('__') and name.endswith('__')",
+            "def is_magic(name: str) -> bool:\n    \"\"\"Check magic name.\"\"\"\n    return name.rsplit('__', 1)[-1] == '' and name.startswith('__') and name.endswith('__')"
+        ]
+    ],
+    [
+        [
+            "def is_public_family(name: str) -> bool:\n    \"\"\"Check the name is come from public modules or not.\"\"\"\n    return not (is_magic(name) or name.startswith('_'))",
+            "def is_public_family(name: str) -> bool:\n    \"\"\"Check the name is come from public modules or not.\"\"\"\n    return not (is_magic(name) or name.startswith('_'))",
+            "def is_public_family(name: str) -> bool:\n    \"\"\"Check the name is come from public modules or not.\"\"\"\n    return not (name.startswith('_') or is_magic(name))",
+            "def is_public_family(name: str) -> bool:\n    \"\"\"Check the name is come from public modules or not.\"\"\"\n    parts = name.split('.')\n    return all(not is_magic(part) for part in parts) and not name.startswith('_')",
+            "def is_public_family(name: str) -> bool:\n    \"\"\"Check the name is come from public modules or not.\"\"\"\n    return not is_magic(name) and not name.split('.')[0].startswith('_')"
+        ]
+    ],
+    [
+        [
+            "def walk_body(body: Sequence[stmt]) -> Iterator[stmt]:\n    \"\"\"Traverse around body and its simple definition scope.\"\"\"\n    for node in body:\n        if isinstance(node, If):\n            yield from walk_body(node.body)\n            yield from walk_body(node.orelse)\n        elif isinstance(node, Try):\n            yield from walk_body(node.body)\n            for h in node.handlers:\n                yield from walk_body(h.body)\n            yield from walk_body(node.orelse)\n            yield from walk_body(node.finalbody)\n        elif isinstance(node, FunctionDef) or isinstance(node, AsyncFunctionDef):\n            yield node\n            yield from walk_body(node.body)\n        elif isinstance(node, ClassDef):\n            yield node\n            yield from walk_body(node.body)\n        else:\n            yield node",
+            "def walk_body(body: Sequence[stmt]) -> Iterator[stmt]:\n    \"\"\"Traverse around body and its simple definition scope.\"\"\"\n    for node in body:\n        if isinstance(node, If):\n            yield from walk_body(node.body)\n            yield from walk_body(node.orelse)\n        elif isinstance(node, Try):\n            yield from walk_body(node.body)\n            for h in node.handlers:\n                yield from walk_body(h.body)\n            yield from walk_body(node.orelse)\n            yield from walk_body(node.finalbody)\n        else:\n            yield node",
+            "def walk_body(body: Sequence[stmt]) -> Iterator[stmt]:\n    \"\"\"Traverse around body and its simple definition scope.\"\"\"\n    for node in body:\n        if isinstance(node, If):\n            yield from walk_body(node.body)\n            yield from walk_body(node.orelse)\n        elif isinstance(node, Try):\n            yield from walk_body(node.body)\n            for h in node.handlers:\n                yield from walk_body(h.body)\n            yield from walk_body(node.orelse)\n            yield from walk_body(node.finalbody)\n        elif isinstance(node, FunctionDef) or isinstance(node, AsyncFunctionDef):\n            yield from walk_body(node.body)\n        elif isinstance(node, ClassDef):\n            for item in node.body:\n                yield from walk_body(item.body) if hasattr(item, 'body') else yield item\n        else:\n            yield node",
+            "def walk_body(body: Sequence[stmt]) -> Iterator[stmt]:\n    \"\"\"Traverse around body and its simple definition scope.\"\"\"\n    for node in body:\n        if isinstance(node, If):\n            yield from walk_body(node.body)\n            yield from walk_body(node.orelse)\n        elif isinstance(node, Try):\n            yield from walk_body(node.body)\n            for h in node.handlers:\n                yield from walk_body(h.body)\n            yield from walk_body(node.orelse)\n            yield from walk_body(node.finalbody)\n        elif isinstance(node, FunctionDef) or isinstance(node, AsyncFunctionDef):\n            yield node\n            yield from walk_body(node.body)\n        elif isinstance(node, ClassDef):\n            yield node\n            yield from walk_body(node.body)\n        else:\n            yield node",
+            "def walk_body(body: Sequence[stmt]) -> Iterator[stmt]:\n    \"\"\"Traverse around body and its simple definition scope.\"\"\"\n    for node in body:\n        if isinstance(node, If):\n            yield from walk_body(node.body)\n            yield from walk_body(node.orelse)\n        elif isinstance(node, Try):\n            yield from walk_body(node.body)\n            for h in node.handlers:\n                yield from walk_body(h.body)\n            yield from walk_body(node.orelse)\n            yield from walk_body(node.finalbody)\n        else:\n            yield node"
+        ]
+    ],
+    [
+        [
+            "def code(doc: str) -> str:\n    \"\"\"Escape Markdown characters from inline code.\"\"\"\n    return doc.replace('`', '\\\\`').replace('*', '\\\\*').replace('_', '\\\\_')",
+            "def code(doc: str) -> str:\n    \"\"\"Escape Markdown characters from inline code.\"\"\"\n    return doc.replace('`', '\\\\`').replace('*', '\\\\*').replace('_', '\\\\_')",
+            "def code(doc: str) -> str:\n    \"\"\"Escape Markdown characters from inline code.\"\"\"\n    return doc.replace('`', '\\\\`').replace('*', '\\\\*').replace('_', '\\\\_')",
+            "def code(doc: str) -> str:\n    \"\"\"Escape Markdown characters from inline code.\"\"\"\n    return doc.replace('`', '\\\\`').replace('*', '\\\\*').replace('_', '\\\\_')",
+            "def code(doc: str) -> str:\n    \"\"\"Escape Markdown characters from inline code.\"\"\"\n    return doc.replace(\"`\", \"\\\\`\").replace(\"*\", \"\\\\*\").replace(\"_\", \"\\\\_\").replace(\"~\", \"\\\\~\")"
+        ]
+    ],
+    [
+        [
+            "def esc_underscore(doc: str) -> str:\n    \"\"\"Escape underscore in names.\"\"\"\n    return doc.replace('_', '\\\\_') if doc else doc",
+            "def esc_underscore(doc: str) -> str:\n    \"\"\"Escape underscore in names.\"\"\"\n    return doc.replace('_', '\\\\_')",
+            "def esc_underscore(doc: str) -> str:\n    \"\"\"Escape underscore in names.\"\"\"\n    return doc.replace('_', '\\\\_')  # Replace underscores with escaped underscores",
+            "def esc_underscore(doc: str) -> str:\n    \"\"\"Escape underscore in names.\"\"\"\n    return doc.replace('_', '\\\\_')  # Replace underscores with escaped underscores.",
+            "def esc_underscore(doc: str) -> str:\n    \"\"\"Escape underscore in names.\"\"\"\n    return doc.replace('_', '\\\\_') if doc else doc"
+        ]
+    ],
+    [
+        [
+            "def doctest(doc: str) -> str:\n    \"\"\"Wrap doctest as markdown Python code.\"\"\"\n    docs = []\n    for i, line in enumerate(doc.splitlines()):\n        if line.startswith('>>>'):\n            line = line.replace('>>>', '`python')\n        elif line.startswith('...'):\n            line = line.replace('...', '... ')\n        elif line.strip() == '':\n            line = ''\n        docs.append(line)\n    \n    return '\\n'.join(docs)",
+            "def doctest(doc: str) -> str:\n    \"\"\"Wrap doctest as markdown Python code.\"\"\"\n    docs = []\n    for i, line in enumerate(doc.splitlines()):\n        if line.startswith('>>>'):\n            docs.append(f'",
+            "def doctest(doc: str) -> str:\n    \"\"\"Wrap doctest as markdown Python code.\"\"\"\n    docs = []\n    for i, line in enumerate(doc.splitlines()):\n        if line.startswith('>>>'):\n            line = f'",
+            "def doctest(doc: str) -> str:\n    \"\"\"Wrap doctest as markdown Python code.\"\"\"\n    docs = []\n    for index, line in enumerate(doc.splitlines()):\n        if line.startswith('>>>'):\n            docs.append(f'",
+            "def doctest(doc: str) -> str:\n    \"\"\"Wrap doctest as markdown Python code.\"\"\"\n    docs = []\n    for i, line in enumerate(doc.splitlines()):\n        if line.startswith('>>>'):\n            line = line.replace('>>>', '"
+        ]
+    ],
+    [
+        [
+            "def _table_cell(items: Iterable[str]) -> str:\n    \"\"\"Make a row of table cell.\"\"\"\n    return '|'.join(items)",
+            "def _table_cell(items: Iterable[str]) -> str:\n    \"\"\"Make a row of table cell.\"\"\"\n    return '|'.join(items)",
+            "def _table_cell(items: Iterable[str]) -> str:\n    \"\"\"Make a row of table cell.\"\"\"\n    return '|'.join(items)",
+            "def _table_cell(items: Iterable[str]) -> str:\n    \"\"\"Make a row of table cell.\"\"\"\n    return '|'.join(items)",
+            "def _table_cell(items: Iterable[str]) -> str:\n    \"\"\"Make a row of table cell.\"\"\"\n    return '|'.join(items)"
+        ]
+    ],
+    [
+        [
+            "def _table_split(args: Iterable[str]) -> str:\n    \"\"\"The split line of the table.\"\"\"\n    return '|'.join(['-' * len(arg) for arg in args])",
+            "def _table_split(args: Iterable[str]) -> str:\n    \"\"\"The split line of the table.\"\"\"\n    return '|'.join(['-' * len(arg) for arg in args])",
+            "def _table_split(args: Iterable[str]) -> str:\n    \"\"\"The split line of the table.\"\"\"\n    return '|'.join(['-' * len(arg) for arg in args])",
+            "def _table_split(args: Iterable[str]) -> str:\n    \"\"\"The split line of the table.\"\"\"\n    return '|'.join(['-' * len(arg) for arg in args])",
+            "def _table_split(args: Iterable[str]) -> str:\n    \"\"\"The split line of the table.\"\"\"\n    return '|'.join(['-' * len(arg) for arg in args])"
+        ]
+    ],
+    [
+        [
+            "def table(*titles: str, items: Iterable[Union[str, Iterable[str]]]) -> str:\n    \"\"\"Create multi-column table with the titles.\n\n    Usage:\n    >>> table('a', 'b', [['c', 'd'], ['e', 'f']])\n    | a | b |\n    |:---:|:---:|\n    | c | d |\n    | e | f |\n    \"\"\"\n    header = _table_cell(titles)\n    separator = _table_split(titles)\n    rows = '\\n'.join(_table_cell(item) for item in items)\n    return f\"{header}\\n{separator}\\n{rows}\"",
+            "def table(*titles: str, items: Iterable[Union[str, Iterable[str]]]) -> str:\n    \"\"\"Create multi-column table with the titles.\n\n    Usage:\n    >>> table('a', 'b', [['c', 'd'], ['e', 'f']])\n    | a | b |\n    |:---:|:---:|\n    | c | d |\n    | e | f |\n    \"\"\"\n    header = _table_cell(titles)\n    split_line = _table_split(titles)\n    rows = [_table_cell(row) for row in items]\n    return '\\n'.join([header, split_line] + rows)",
+            "def table(*titles: str, items: Iterable[Union[str, Iterable[str]]]) -> str:\n    \"\"\"Create multi-column table with the titles.\n\n    Usage:\n    >>> table('a', 'b', [['c', 'd'], ['e', 'f']])\n    | a | b |\n    |:---:|:---:|\n    | c | d |\n    | e | f |\n    \"\"\"\n    header = _table_cell(titles)\n    separator = _table_split(titles)\n    rows = [_table_cell(row) for row in items]\n    return '\\n'.join([header, separator] + rows)",
+            "def table(*titles: str, items: Iterable[Union[str, Iterable[str]]]) -> str:\n    \"\"\"Create multi-column table with the titles.\n\n    Usage:\n    >>> table('a', 'b', [['c', 'd'], ['e', 'f']])\n    | a | b |\n    |:---:|:---:|\n    | c | d |\n    | e | f |\n    \"\"\"\n    result = []\n    result.append(_table_cell(titles))\n    result.append(_table_split(titles))\n    for item in items:\n        if isinstance(item, Iterable) and not isinstance(item, str):\n            result.append(_table_cell(item))\n        else:\n            result.append(_table_cell([item]))\n    return '\\n'.join(result)",
+            "def table(*titles: str, items: Iterable[Union[str, Iterable[str]]]) -> str:\n    \"\"\"Create multi-column table with the titles.\n\n    Usage:\n    >>> table('a', 'b', [['c', 'd'], ['e', 'f']])\n    | a | b |\n    |:---:|:---:|\n    | c | d |\n    | e | f |\n    \"\"\"\n    header = _table_cell(titles)\n    split = _table_split(titles)\n    rows = '\\n'.join(_table_cell(row) for row in items)\n    return f\"{header}\\n{split}\\n{rows}\""
+        ]
+    ],
+    [
+        [
+            "def _type_nam(obj: object) -> str:\n    \"\"\"Get type.\"\"\"\n    return type(obj).__name__",
+            "def _type_nam(obj: object) -> str:\n    \"\"\"Get type.\"\"\"\n    return str(type(obj).__name__)",
+            "def _type_name(obj: object) -> str:\n    \"\"\"Get type name.\"\"\"\n    return type(obj).__name__",
+            "def _type_nam(obj: object) -> str:\n    \"\"\"Get type.\"\"\"\n    return type(obj).__name__",
+            "def _type_name(obj: object) -> str:\n    \"\"\"Get type name.\"\"\"\n    return type(obj).__name__"
+        ]
+    ],
+    [
+        [
+            "def _e_type(*elements: Sequence[Optional[expr]]) -> str:\n    \"\"\"Get element type if type is constants.\"\"\"\n    ts = []\n    for el in elements:\n        if isinstance(el, Constant):\n            ts.append(_type_name(el.value))\n    return ', '.join(ts)",
+            "def _e_type(*elements: Sequence[Optional[expr]]) -> str:\n    \"\"\"Get element type if type is constants.\"\"\"\n    types = []\n    for element in elements:\n        if isinstance(element, Constant):\n            types.append(_type_name(element.value))\n    return ', '.join(types)",
+            "def _e_type(*elements: Sequence[Optional[expr]]) -> str:\n    \"\"\"Get element type if type is constants.\"\"\"\n    ts = []\n    for elem in elements:\n        if isinstance(elem, Constant):\n            ts.append(_type_name(elem.value))\n    return ', '.join(ts)",
+            "def _e_type(*elements: Sequence[Optional[expr]]) -> str:\n    \"\"\"Get element type if type is constants.\"\"\"\n    ts = []\n    for element in elements:\n        if isinstance(element, Constant):\n            ts.append(_type_name(element.value))\n    return ', '.join(ts)",
+            "def _e_type(*elements: Sequence[Optional[expr]]) -> str:\n    \"\"\"Get element type if type is constants.\"\"\"\n    types = []\n    for element in elements:\n        if isinstance(element, Constant):\n            types.append(_type_name(element.value))\n    return ', '.join(types)"
+        ]
+    ],
+    [
+        [
+            "def const_type(node: expr) -> str:\n    \"\"\"Constant type inference.\"\"\"\n    if isinstance(node, Constant):\n        return _type_name(node.value).lower()\n    return \"Any\"",
+            "def const_type(node: expr) -> str:\n    \"\"\"Constant type inference.\"\"\"\n    if isinstance(node, Constant):\n        return _type_name(node.value).lower()\n    return \"Any\"",
+            "def const_type(node: expr) -> str:\n    \"\"\"Constant type inference.\"\"\"\n    if isinstance(node, Constant):\n        return _type_name(node.value).lower()\n    return \"Any\"",
+            "def const_type(node: expr) -> str:\n    \"\"\"Constant type inference.\"\"\"\n    if isinstance(node, Constant):\n        return _type_name(node.value).lower()\n    return \"Any\"",
+            "def const_type(node: expr) -> str:\n    \"\"\"Constant type inference.\"\"\"\n    if isinstance(node, Constant):\n        return _type_name(node.value).lower()\n    return \"Any\""
+        ]
+    ]
+]
