@@ -43,10 +43,45 @@
 
 ## ⚡ QuickStart
 
-### 📝 1. Prepare the Input Files
+### 📝 1. Preparing Your Input Files
 
-📌 Ensure you have input.jsonl and the input repository structured correctly in the input folder.
-If you want to use RepoExec, CoderEval or ExecRepobench, you can follow the 
+To get started, make sure your `input.jsonl` file and the corresponding input repository are correctly set up within your `input` folder.
+
+If you're looking to use **RepoExec**, **CoderEval**, or **ExecRepoBench**, follow the specific instructions below to prepare your data.
+
+#### RepoExec
+
+To configure for **RepoExec**, you'll need to modify `input/handle_input+RepoExec+Context.py`.
+
+**Change Line 6** from `test-apps/httpie` to the name of your project, then execute the Python file:
+
+```python
+filtered_data = [item for item in ds if item['project'] == 'your-project-name']
+```
+
+---
+
+#### CoderEval
+
+For **CoderEval**, adjust `input/handle_input+CoderEval+Context.py`.
+
+**Change Line 8** from `SoftwareHeritage/swh-lister` to your project's name, and then run the Python file:
+
+```python
+if record.get("project") != "your-project-name":
+```
+
+---
+
+#### ExecRepoBench
+
+When using **ExecRepoBench**, you'll edit `input/handle_input+ExecRepoBench+Context.py`.
+
+**Change Line 17** from `algorithms` to your project's name, and then execute the Python file:
+
+```python
+if repo_name != "your-project-name":
+```
 
 ### 📦 2. Install Dependencies
 
@@ -117,6 +152,5 @@ In our paper, we evaluate AllianceCoder using three function-level Python code g
 
 - 📦 **Codebase**: [ExecRepoBench](https://execrepobench.github.io)  
 - 📄 **Paper**: [arXiv:2412.11990](https://arxiv.org/abs/2412.11990)  
-- 📁 **Modified Data File**: `execrepobench_data.jsonl` (included in this repo)
+- 📁 **Modified Data File**: `input/execrepobench_data.jsonl` (included in this repo)
 
----
